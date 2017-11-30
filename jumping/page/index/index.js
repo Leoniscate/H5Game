@@ -363,10 +363,6 @@ var Game = {
         // 游戏结束回调
         this.config.onGameEnd(this.gameScore);
 
-        // 停止渲染
-        setTimeout(function(){
-            createjs.Ticker.setPaused(true);
-        },1000);
     },
     _centerStairs: function(transX ,transY){
         this.Stairs.lastX -= transX;
@@ -404,8 +400,9 @@ var Game = {
         var self = this;
         this.dropInterval = createjs.setInterval(function(){
             self.Floor.drop();
-            if(self.Floor.dropIndex == self.clickTimes) { // 机器人脚下的街砖掉落
+            if(self.Floor.dropIndex == self.clickTimes) { // 机器人脚下的阶砖掉落
                 createjs.clearInterval(self.dropInterval);
+                console.log("游戏失败", "阶砖掉落");
                 self.Robot.dropAndDisappear();
                 self._gameOver();
             }
@@ -473,10 +470,10 @@ Robot.prototype.init = function(){
 };
 
 Robot.prototype.move = function(transX, transY){
-    this.lastPosX = this.lastPosX + transX;
-    this.lastPosY = this.lastPosY - transY;
+    this.lastPosX += transX;
+    this.lastPosY -= transY;
     this.sprite.gotoAndPlay('jump');
-    createjs.Tween.get(this.sprite).to({x: this.lastPosX, y: this.lastPosY },200);
+    createjs.Tween.get(this.sprite, {override: true}).to({x: this.lastPosX, y: this.lastPosY }, 200);
 };
 
 Robot.prototype.right = function(){

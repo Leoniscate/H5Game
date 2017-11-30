@@ -98,7 +98,7 @@
         })
         // 禁止页面滑动
         document.addEventListener('touchmove',function(e){
-            e.preventDefault();
+            e && e.preventDefault();
         })
 
     })();
