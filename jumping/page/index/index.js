@@ -49,7 +49,7 @@ var Utils = {
             }
         };
     },
-    // 区间随机数
+    // 区间随机数: min <= val < max
     getRandom: function (min, max) {
         return Math.random() * (max - min) + min;
     },
